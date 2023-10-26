@@ -27,11 +27,9 @@ io.on("connection", (socket) => {
   console.log("connected");
   console.log("====================================");
   socket.on("get-document", async (documentId) => {
-    await getDocument(documentId).then((document) => {
-      socket.join(documentId);
-      if (document.data !== undefined)
-        socket.emit("load-document", document.data);
-    });
+    const document = await getDocument(documentId);
+    socket.join(documentId);
+    socket.emit("load-document", document?.data);
 
     socket.on("send-changes", (delta) => {
       socket.broadcast.to(documentId).emit("receive-changes", delta);

@@ -29,7 +29,8 @@ io.on("connection", (socket) => {
   socket.on("get-document", async (documentId) => {
     await getDocument(documentId).then((document) => {
       socket.join(documentId);
-      if (document.data) socket.emit("load-document", document.data);
+      if (document.data !== undefined)
+        socket.emit("load-document", document.data);
     });
 
     socket.on("send-changes", (delta) => {

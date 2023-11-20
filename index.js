@@ -26,8 +26,10 @@ io.on("connection", (socket) => {
   console.log("====================================");
   console.log("connected");
   console.log("====================================");
-  socket.on("get-document", async (documentId, commentsWithPositions) => {
+  socket.on("get-document", async (documentId) => {
     const document = await getDocument(documentId);
+
+    console.log(document, "document");
     socket.join(documentId);
     socket.emit("load-document", document);
 

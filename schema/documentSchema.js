@@ -10,9 +10,9 @@ const documentSchema = mongoose.Schema({
     required: true,
   },
   commentsWithPositions: {
-    type: Object,
+    type: Array,
     required: true,
-    default: null,
+    default: [],
   },
 });
 

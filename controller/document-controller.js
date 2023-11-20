@@ -7,7 +7,11 @@ export const getDocument = async (id, commentsWithPositions) => {
 
   if (document) return document;
 
-  return await Document.create({ _id: id, data: "", commentsWithPositions });
+  return await Document.create({
+    _id: id,
+    data: "",
+    commentsWithPositions: [],
+  });
 };
 
 export const updateDocument = async (id, data, commentsWithPositions) => {

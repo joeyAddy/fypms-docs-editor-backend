@@ -38,6 +38,9 @@ io.on("connection", (socket) => {
     });
 
     socket.on("save-document", async (data, commentsWithPositions) => {
+      console.log("====================================");
+      console.log("comments with positions: " + commentsWithPositions);
+      console.log("====================================");
       await updateDocument(documentId, data, commentsWithPositions);
     });
 

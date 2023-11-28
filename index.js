@@ -27,28 +27,23 @@ io.on("connection", (socket) => {
   console.log("connected");
   console.log("====================================");
   socket.on("get-document", async (documentId) => {
+    console.log("====================================");
+    console.log(documentId);
+    console.log("====================================");
     const document = await getDocument(documentId);
 
-    console.log(document, "document");
     socket.join(documentId);
     socket.emit("load-document", document);
 
-    socket.on("send-changes", (delta) => {
-      socket.broadcast.to(documentId).emit("receive-changes", delta);
+    socket.on("send-changes", (text) => {
+      console.log("sending changes");
+      socket.broadcast.to(documentId).emit("receive-changes", text);
     });
 
-    socket.on("save-document", async (data, commentsWithPositions) => {
-      console.log("====================================");
-      console.log("comments with positions: " + commentsWithPositions);
-      console.log("====================================");
-      await updateDocument(documentId, data, commentsWithPositions);
-    });
+    socket.on("save-document", async (payload) => {
+      const { sfdt } = payload;
 
-    socket.on("send-comments", (data) => {
-      const { documentId, commentsWithPositions } = data;
-
-      // Broadcast the comments with positions to the specific room (documentId)
-      socket.to(documentId).emit("receive-comments", commentsWithPositions);
+      await updateDocument(documentId, sfdt);
     });
   });
 });

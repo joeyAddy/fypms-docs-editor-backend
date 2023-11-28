@@ -5,14 +5,9 @@ const documentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  data: {
+  sfdt: {
     type: Object,
     required: true,
-  },
-  commentsWithPositions: {
-    type: Array,
-    required: true,
-    default: [],
   },
 });
 
